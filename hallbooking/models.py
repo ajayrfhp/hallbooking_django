@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-import time
+
 class Room(models.Model):
 	name=models.CharField(max_length=128,unique=True)
 	is_available=models.BooleanField(default=True)
@@ -16,10 +16,10 @@ class Bookings(models.Model):
 	need_audio=models.NullBooleanField(default=False)
 	mobile_number=models.IntegerField()
 	staff_mailid=models.CharField(max_length=128)
-	time_of_booking=models.DateTimeField(default=time.strftime("%c"))
+	time_of_booking=models.DateTimeField(auto_now=True)
 	starttime=models.IntegerField()
 	endtime=models.IntegerField()
-	date=models.DateField(default=time.strftime("%d/%m/%Y"))	
+	date_booking=models.DateField(auto_now=True)	
 	is_alloted=models.NullBooleanField(default=False)
 	def __unicode__(self):
 		return str(self.name)
