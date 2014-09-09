@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import widgets
 from  hallbooking.models import Room,Bookings
+import datetime 	
 
 class BookingsForm(forms.ModelForm):
 	name=forms.CharField(widget=forms.HiddenInput())
@@ -13,7 +14,7 @@ class BookingsForm(forms.ModelForm):
 	starttime=forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'starttime in Railwaytime'}))
 	endtime=forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'endtime in Railwaytime'}))
 	time_of_booking=forms.DateTimeField(widget=forms.HiddenInput())
-
+	date_booking=forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker'}))
 	is_alloted=forms.NullBooleanField(widget=forms.HiddenInput())
 
 	class Meta:

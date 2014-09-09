@@ -4,10 +4,14 @@
     	{% load static %}
         <title>Hallbooking system</title>
         <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+        <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/ui-darkness/jquery-ui.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
         <div class="header"><h1>HALL BOOKING SYSTEM</div>
     </head>
     <body>
-        {% if Rooms  %}
+      
+       {% if Rooms  %}
         <div class='box'>
         {% for room in Rooms %}
                 {% if room.is_available %}
@@ -18,18 +22,45 @@
                  {% endif %}
         {% endfor %}
         </div>
+    
         {% endif %}
-        <form id="bookings_form" method="post"/>
+        <form id="bookings_form" action='/hallbooking/check_availability/' method="post"/>
+             
+            {% csrf_token %}
             {% for field in form.visible_fields %}
                 <div class="give_the_damn_spaces">
                 {{ field.errors }}
                 {{ field.help_text }}
                 {{ field }}
-                <br/>
-            </div>
+                </div>
             {% endfor %}
+            
+        <input type="button" value="Check for availablility" class="submit" > 
         </form>
       	<div class="footer"><h2><b>Developed and maintained by DeltaForce</h2></div>
+<script>
+    
+        var blah;
+        $(function() {
+            $(".datepicker").datepicker();
+            $(".datepicker").datepicker("setDate", new Date);
+    });
+
+$('.submit').click(function(){
+
+    $('#bookings_form').submit();
+
+   /* var data;
+    data=$("#id_date_booking").val();
+     $.get('/hallbooking/check_availability/', {data:data}, function(d){
+        console.log(d);
+           });
+     */
+});
+
+
+
+    </script>     
     </body>
 
 </html>

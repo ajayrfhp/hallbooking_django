@@ -17,7 +17,7 @@
 }
 .give_the_damn_spaces
 {
-	height:50px;
+	
 }
 .red_dabba
 {
@@ -50,7 +50,7 @@
 .footer
 {
 	text-align: center;
-	position: absolute;
-	bottom: 0px;
-	left:520px;
+	position: fixed;
+	top:550px !important;
+	left:520px !important;
 }

@@ -19,7 +19,7 @@ class Bookings(models.Model):
 	time_of_booking=models.DateTimeField(auto_now=True)
 	starttime=models.IntegerField()
 	endtime=models.IntegerField()
-	date_booking=models.DateField(auto_now=True)	
+	date_booking=models.DateField()	
 	is_alloted=models.NullBooleanField(default=False)
 	def __unicode__(self):
 		return str(self.name)
