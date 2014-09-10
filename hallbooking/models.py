@@ -24,6 +24,19 @@ class Bookings(models.Model):
 	def __unicode__(self):
 		return str(self.name)
 
+class Test(models.Model):
+	rollnumber=models.IntegerField()
+	organization=models.CharField(max_length=128,null=True)
+	need_lcd=models.NullBooleanField(default=False)
+	need_audio=models.NullBooleanField(default=False)
+	mobile_number=models.IntegerField()
+	staff_mailid=models.CharField(max_length=128)
+	starttime=models.IntegerField()
+	endtime=models.IntegerField()
+	date_booking=models.DateField()	
+	is_alloted=models.NullBooleanField(default=False)
+	def __unicode__(self):
+		return str(self.name)
 
 
 # Create your models here.

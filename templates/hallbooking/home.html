@@ -10,7 +10,10 @@
         <div class="header"><h1>HALL BOOKING SYSTEM</div>
     </head>
     <body>
-      
+        {% if x %}
+        <p> {{ x }}</p>
+        {% endif %}
+
        {% if Rooms  %}
         <div class='box'>
         {% for room in Rooms %}
@@ -24,14 +27,14 @@
         </div>
     
         {% endif %}
-        <form id="bookings_form" action='/hallbooking/check_availability/' method="post"/>
+        <form id="bookings_form" action='/hallbooking/home/' method="post"/>
              
             {% csrf_token %}
             {% for field in form.visible_fields %}
                 <div class="give_the_damn_spaces">
-                {{ field.errors }}
                 {{ field.help_text }}
                 {{ field }}
+                {{ field.errors }}
                 </div>
             {% endfor %}
             

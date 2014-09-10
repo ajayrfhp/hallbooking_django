@@ -9,7 +9,6 @@ def populate():
 	r1=add_room('EEE Audi')
 	r1=add_room('Civil Audi')
 	r1=add_room('Barn')
-	add_bookings(name=r1,rollnumber=1234,organization='Delta',mr=85,staff_mailid='106112003@nitt.edu',starttime=12,endtime=14,is_alloted=False)
 
 
 def add_bookings(name,rollnumber,organization,mr,staff_mailid,starttime,endtime,is_alloted):
