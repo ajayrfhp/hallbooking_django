@@ -7,21 +7,24 @@
         <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/ui-darkness/jquery-ui.css" rel="stylesheet">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<script src="{% static calendar.js %}"></script>
+
+
         <div class="header"><h1>HALL BOOKING SYSTEM</div>
     </head>
     <body>
         {% if x %}
-        <p> {{ x }}</p>
+        <p></p>
         {% endif %}
 
        {% if Rooms  %}
         <div class='box'>
         {% for room in Rooms %}
-                {% if room.is_available %}
-                <div class='green_dabba'>{{ room.name }}</div>
+                {% if room.name in x %}
+                <div class='red_dabba'>{{ room.name }}</div>
                
                 {% else %}
-                <div class='red_dabba'>{{ room.name }}</div>
+                <div class='green_dabba'>{{ room.name }}</div>
                  {% endif %}
         {% endfor %}
         </div>
@@ -45,8 +48,7 @@
     
         var blah;
         $(function() {
-            $(".datepicker").datepicker();
-            $(".datepicker").datepicker("setDate", new Date);
+                $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
     });
 
 $('.submit').click(function(){

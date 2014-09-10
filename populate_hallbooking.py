@@ -11,6 +11,7 @@ def populate():
 	r1=add_room('Barn')
 
 
+
 def add_bookings(name,rollnumber,organization,mr,staff_mailid,starttime,endtime,is_alloted):
 	b=Bookings.objects.get_or_create(name=name,rollnumber=rollnumber,organization=organization,mobile_number=mr,staff_mailid=staff_mailid,starttime=starttime,endtime=endtime,is_alloted=is_alloted)[0]
 	return b

@@ -2,21 +2,25 @@
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.shortcuts import render_to_response,redirect
-from hallbooking.models import Room
+from hallbooking.models import Room,Bookings
 from hallbooking.forms import TestForm
 
 def home(request):
 	context = RequestContext(request)
 	form=TestForm()
-
 	if(request.method=='POST'):
 		room_list=Room.objects.order_by('name')
 		form=TestForm(request.POST)
 		if form.is_valid():
 			x=55
 			##context_dict={'Rooms':room_list,'x':x}
-			##return render_to_response('hallbooking/home.html',context_dict,context)				
-			context_dict={'Rooms':room_list,'form':form,'x':form.errors}
+			##return render_to_response('hallbooking/home.html',context_dict,context)
+			date_to_check=str(form['date_booking'].value())
+			bookings_that_day=Bookings.objects.filter(date_booking=date_to_check)
+			status={}
+			for books in bookings_that_day:
+				status[str(books)]=False
+			context_dict={'Rooms':room_list,'form':form,'x':status}
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 		else:
 			print form.errors
