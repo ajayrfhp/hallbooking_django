@@ -48,5 +48,51 @@ def index(request):
 	return render_to_response('hallbooking/index.html', context)
 def check_availability(request):
 	context = RequestContext(request)
-	blah=request.GET['data']
-	return HttpResponse(blah)
+	rollnumber=request.GET['rollnumber']
+	name=request.GET['name']
+	need_lcd=request.GET['need_lcd']
+	need_audio=request.GET['need_audio']
+	mobile_number=request.GET['mobile_number']
+	staff_mailid=request.GET['staff_mailid']
+	starttime=request.GET['starttime']
+	endtime=request.GET['endtime']
+	date_booking=request.GET['date_booking']
+	organization=request.GET['organization']
+	if(need_lcd==2):
+		need_lcd=True
+	else:
+		need_lcd=False
+
+	if(need_audio==2):
+		need_audio=True
+	else:
+		need_audio=False	
+
+	bookings_that_day=Bookings.objects.filter(date_booking=date_booking)
+	status={}
+	y=True
+	for books in bookings_that_day:
+		b_end=int(books.endtime)
+		b_start=int(books.starttime)
+		f_start=int(starttime)
+		f_end=int(endtime)
+		
+		if(b_end<=f_start and b_end<=f_end):
+			#add a booking
+			y1=True
+			##temp_room=Rooms.objects.filter(name=name)
+			##k=Bookings.objects.get_or_create(name=temp_room,rollnumber=rollnumber,need_lcd=need_lcd,need_audio=need_audio,date_booking=date_booking,starttime=starttime,endtime=endtime,organization=organization,staff_mailid=staff_mailid)[0]
+		elif(b_start>=f_start and b_start>=f_end):
+			#add a booking
+			y1=True
+			##k=Bookings.objects.get_or_create(name=temp_room,rollnumber=rollnumber,need_lcd=need_lcd,need_audio=need_audio,date_booking=date_booking,starttime=starttime,endtime=endtime,organization=organization,staff_mailid=staff_mailid)[0]
+		else:	
+			y=False
+
+	if(y==True):
+		temp_room=Room.objects.get(name=str(name))
+		k=Bookings.objects.get_or_create(name=temp_room,rollnumber=rollnumber,need_lcd=need_lcd,need_audio=need_audio,date_booking=date_booking,starttime=starttime,endtime=endtime,organization=organization,staff_mailid=staff_mailid,mobile_number=mobile_number)[0]
+		y=temp_room		
+	return HttpResponse(y)
+
+	

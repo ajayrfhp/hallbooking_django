@@ -21,10 +21,10 @@
         <div class='box'>
         {% for room in Rooms %}
                 {% if room.name in x %}
-                <div class='red_dabba'>{{ room.name }}</div>
+                <div class='red_dabba' id={{ room.name }}>{{ room.name }}</div>
                
                 {% else %}
-                <div class='green_dabba'>{{ room.name }}</div>
+                <div class='green_dabba' id={{ room.name }}>{{ room.name }}</div>
                  {% endif %}
         {% endfor %}
         </div>
@@ -47,13 +47,44 @@
       	<div class="footer"><h2><b>Developed and maintained by DeltaForce</h2></div>
 <script>
     
-        var blah;
+        var hall='BUCK';
+        function choose(x)
+        {
+            hall=x;
+            alert(x+' chosen');
+        }
+        $(function() {
+            $('#A11').click(function(){
+                choose('A11');
+            });
+                       $('#A12').click(function(){
+                        choose('A12');
+            });
+           $('#A13').click(function(){
+            choose('A13');
+            });
+           $('#A2').click(function(){
+            choose('A2');
+
+            });
+           $('#Barn').click(function(){
+               choose('Barn'); 
+            });
+           $('#Civil').click(function(){
+            choose('Civil Audi');
+            });
+           $('#EEE').click(function(){
+            choose('EEE Audi');
+            });
+
+        });
         $(function() {
                 $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
     });
 
 $('.submit').click(function(){
     $('#bookings_form').submit();
+
 
    /* var data;
     data=$("#id_date_booking").val();
@@ -65,20 +96,38 @@ $('.submit').click(function(){
 
     
 $('.book').click(function(){
-    
-   var data=[];
-   data['name']=$('#id_name').val();
-   data['rollnumber']=$('#id_rollnumber').val();
-   data['organization']=$('#id_organization').val();
-   data['need_lcd']=$('#id_need_lcd').val();
-   data['need_audio']=$('#id_need_audio').val();
-   data['mobile_number']=$('#id_mobile_number').val();
-   data['staff_mailid']=$('#id_staff_mailid').val();
-   data['starttime']=$('#id_starttime').val();
-   data['endtime']=$('#id_endtime').val();
-  $.get('/hallbooking/check_availability/', {'data':data}, function(d){
+  var rollnumber,name,organization,need_lcd,need_audio,mobile_number,staff_mailid,starttime,endtime,date_booking,is_alloted;
+  rollnumber=$('#id_rollnumber').val();
+  name=hall;
+  need_lcd=$('#id_need_lcd').val();
+  need_audio=$('#id_need_audio').val();
+  mobile_number=$('#id_mobile_number').val();
+  staff_mailid=$('#id_staff_mailid').val();
+  starttime=$('#id_starttime').val();
+  endtime=$('#id_endtime').val();
+  date_booking=$('#id_date_booking').val();
+  organization=$('#id_organization').val();
+  
+  
+  console.log(mobile_number);
+  console.log(endtime);
+  
+  $.get('/hallbooking/check_availability/',{'rollnumber':rollnumber,
+                                            'name':name, 
+                                            'need_lcd': need_lcd,
+                                            'need_audio':need_audio,
+                                            'mobile_number':mobile_number,
+                                            'staff_mailid':staff_mailid,
+                                            'starttime':starttime,
+                                            'endtime':endtime,
+                                            'date_booking':date_booking,
+                                            'organization':organization,
+                                        }, function(d){
         console.log(d);
            });
+
+
+
 });
 
 

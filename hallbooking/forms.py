@@ -20,6 +20,7 @@ class BookingsForm(forms.ModelForm):
 	class Meta:
 		model=Bookings
 class TestForm(forms.ModelForm):
+	name=forms.CharField(widget=forms.HiddenInput())
 	rollnumber=forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'rollnumber'}))
 	organization=forms.CharField(max_length=128,widget=forms.TextInput(attrs={'placeholder': 'organization'}))
 	need_lcd=forms.NullBooleanField(help_text="Need Lcd             ? ")
