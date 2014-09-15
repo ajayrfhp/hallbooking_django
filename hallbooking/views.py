@@ -3,7 +3,12 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response,redirect
 from hallbooking.models import Room,Bookings
 from hallbooking.forms import TestForm
+import sys
+import imaplib
+session={}
 def home(request):
+	if 'rollnumber' not in session:
+		return redirect('index')
 	context = RequestContext(request)
 	form=TestForm()
 	if(request.method=='POST'):
@@ -38,7 +43,7 @@ def home(request):
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 		else:
 			print form.errors
-			context_dict={'Rooms':room_list,'form':form,'x':form.errors,'y':'blah'}
+			context_dict={'Rooms':room_list,'form':form,'x':form.errors}
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 
 	else:
@@ -47,6 +52,32 @@ def home(request):
 		form3=TestForm()
 		context_dict={'Rooms':room_list,'form':form3}
 		return render_to_response('hallbooking/home.html',context_dict,context)
+
+def login(request):
+	if(request.method=='POST'):
+		context = RequestContext(request)
+		host='webmail.nitt.edu'
+		port=143
+		rollnumber=request.POST['rollnumber']
+		password=request.POST['password']
+		conn=imaplib.IMAP4(host)
+		try:
+			conn.login(rollnumber,password)
+			session['rollnumber']=rollnumber
+			print 'logged in '+rollnumber
+			return redirect('home')
+		except conn.error:
+			print 'login unsuccesful'
+		return redirect('index')
+
+def logout(request):
+	session.pop('rollnumber',None)
+	return redirect('index')
+
+
+			
+		
+
 
 def index(request):
 	context = RequestContext(request)
