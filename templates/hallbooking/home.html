@@ -13,10 +13,17 @@
         <div class="header"><h1>HALL BOOKING SYSTEM</div>
     </head>
     <body>
-        {% if y %}
-        <p>{{ y}}</p>
-        {% endif %}
+        {% if my_bookings %}
 
+        <div class='my_bookings'>
+          LIST OF MY BOOKINGS <br/>
+          {% for book in my_bookings %}          
+          {{ book.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {{ book.date_booking}}
+          {% endfor %}
+        </div>
+
+        {% endif %}
        {% if Rooms  %}
         <div class='box'>
         {% for room in Rooms %}

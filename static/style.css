@@ -30,6 +30,12 @@
 	margin-top:5px;
 	padding-top: 15px;
 }
+.my_bookings
+{
+	position:absolute;
+	top:50px;
+	right:25px;
+}
 .box
 {
 	float: left;

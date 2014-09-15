@@ -7,22 +7,23 @@ import sys
 import imaplib
 session={}
 def home(request):
-	if 'rollnumber' not in session:
-		return redirect('index')
 	context = RequestContext(request)
 	form=TestForm()
 	if(request.method=='POST'):
 		room_list=Room.objects.order_by('name')
 		form=TestForm(request.POST)
-
 		if form.is_valid():
+			if 'rollnumber' not in session:
+				return redirect('index')			
 			x=55
 			##context_dict={'Rooms':room_list,'x':x}
 			##return render_to_response('hallbooking/home.html',context_dict,context)
 			date_to_check=str(form['date_booking'].value())
-			bookings_that_day=Bookings.objects.filter(date_booking=date_to_check)
+			bookings_that_day=Bookings.objects.all().filter(date_booking=date_to_check)
 			status={}
 			y=True
+			##my_bookings=Bookings.objects.get(rollnumber=session['rollnumber'])
+			my_bookings=Bookings.objects.all().filter(rollnumber=session['rollnumber'])
 			for books in bookings_that_day:
 				b_end=int(books.endtime)
 				b_start=int(books.starttime)
@@ -36,21 +37,24 @@ def home(request):
 					status[str(books)]=False
 					y=False
 			if(y):		
-				context_dict={'Rooms':room_list,'form':form,'x':status,'y':y}
+				context_dict={'Rooms':room_list,'form':form,'x':status,'y':y,'my_bookings':my_bookings}
 			else:
-				context_dict={'Rooms':room_list,'form':form,'x':status}
+				context_dict={'Rooms':room_list,'form':form,'x':status,'my_bookings':my_bookings}
 
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 		else:
 			print form.errors
-			context_dict={'Rooms':room_list,'form':form,'x':form.errors}
+			context_dict={'Rooms':room_list,'form':form,'x':form.errors,'my_bookings':my_bookings}
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 
 	else:
+		if 'rollnumber' not in session:
+			return redirect('index')
+		my_bookings=Bookings.objects.all().filter(rollnumber=session['rollnumber'])
 		context = RequestContext(request)
 		room_list=Room.objects.order_by('name')
 		form3=TestForm()
-		context_dict={'Rooms':room_list,'form':form3}
+		context_dict={'Rooms':room_list,'form':form3,'my_bookings':my_bookings}
 		return render_to_response('hallbooking/home.html',context_dict,context)
 
 def login(request):
