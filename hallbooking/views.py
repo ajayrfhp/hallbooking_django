@@ -8,13 +8,12 @@ import imaplib
 session={}
 def home(request):
 	context = RequestContext(request)
-	form=TestForm()
+	form=TestForm()	
 	if(request.method=='POST'):
 		room_list=Room.objects.order_by('name')
 		form=TestForm(request.POST)
 		if form.is_valid():
-			if 'rollnumber' not in session:
-				return redirect('index')			
+			
 			x=55
 			##context_dict={'Rooms':room_list,'x':x}
 			##return render_to_response('hallbooking/home.html',context_dict,context)
@@ -44,6 +43,7 @@ def home(request):
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 		else:
 			print form.errors
+			my_bookings=Bookings.objects.all().filter(rollnumber=session['rollnumber'])
 			context_dict={'Rooms':room_list,'form':form,'x':form.errors,'my_bookings':my_bookings}
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 
@@ -132,7 +132,7 @@ def check_availability(request):
 	if(y==True):
 		temp_room=Room.objects.get(name=str(name))
 		k=Bookings.objects.get_or_create(name=temp_room,rollnumber=rollnumber,need_lcd=need_lcd,need_audio=need_audio,date_booking=date_booking,starttime=starttime,endtime=endtime,organization=organization,staff_mailid=staff_mailid,mobile_number=mobile_number)[0]
-		y=temp_room		
+		y=temp_room			
 	return HttpResponse(y)
 
 	
