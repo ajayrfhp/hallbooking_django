@@ -14,7 +14,7 @@
     </head>
     <body>
         {% if y %}
-        <p>{{ y }}</p>
+        <p>{{ y}}</p>
         {% endif %}
 
        {% if Rooms  %}
@@ -43,7 +43,11 @@
             
         <input type="button" value="Check for availablility" class="submit" > 
         </form>
-        <input type="button" value="Book this fucker" class="book" > 
+        {% if y %}
+          <input type="button" value="Book this fucker" class="book" > 
+        {% endif %}
+
+
       	<div class="footer"><h2><b>Developed and maintained by DeltaForce</h2></div>
 <script>
     

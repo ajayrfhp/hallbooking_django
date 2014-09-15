@@ -9,7 +9,7 @@ def populate():
 	r1=add_room('EEE Audi')
 	r1=add_room('Civil Audi')
 	r1=add_room('Barn')
-	k=Bookings.objects.get_or_create(name=name,rollnumber=rollnumber,need_lcd=need_lcd,need_audio=need_audio,date_booking=date_booking,starttime=starttime,endtime=endtime,organization=organization,staff_mailid=staff_mailid)[0]
+
 
 
 def add_bookings(name,rollnumber,organization,mr,staff_mailid,starttime,endtime,is_alloted):

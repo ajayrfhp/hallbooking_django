@@ -9,6 +9,7 @@ def home(request):
 	if(request.method=='POST'):
 		room_list=Room.objects.order_by('name')
 		form=TestForm(request.POST)
+
 		if form.is_valid():
 			x=55
 			##context_dict={'Rooms':room_list,'x':x}
@@ -16,24 +17,28 @@ def home(request):
 			date_to_check=str(form['date_booking'].value())
 			bookings_that_day=Bookings.objects.filter(date_booking=date_to_check)
 			status={}
-			y=''
+			y=True
 			for books in bookings_that_day:
 				b_end=int(books.endtime)
 				b_start=int(books.starttime)
 				f_start=int(form['starttime'].value())
 				f_end=int(form['endtime'].value())
 				if(b_end<=f_start and b_end<=f_end):
-					y='safe machan'
+					sex='sex'
 				elif(b_start>=f_start and b_start>=f_end):
-					y='you are also fine'
+					sex='sex'
 				else:	
 					status[str(books)]=False
-					y=''
-			context_dict={'Rooms':room_list,'form':form,'x':status,'y':y}
+					y=False
+			if(y):		
+				context_dict={'Rooms':room_list,'form':form,'x':status,'y':y}
+			else:
+				context_dict={'Rooms':room_list,'form':form,'x':status}
+
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 		else:
 			print form.errors
-			context_dict={'Rooms':room_list,'form':form,'x':form.errors}
+			context_dict={'Rooms':room_list,'form':form,'x':form.errors,'y':'blah'}
 			return render_to_response('hallbooking/home.html',context_dict,context)			
 
 	else:

@@ -25,7 +25,6 @@ class Bookings(models.Model):
 		return str(self.name)
 
 class Test(models.Model):
-	name=models.ForeignKey(Room)
 	rollnumber=models.IntegerField()
 	organization=models.CharField(max_length=128,null=True)
 	need_lcd=models.NullBooleanField(default=False)
